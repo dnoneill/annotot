@@ -57,7 +57,7 @@ module Annotot
     end
 
     def annotation_params
-      params.require(:annotation).permit(:uuid, :data, :canvas)
+      params.require(:annotation).permit(:uuid, :data, :canvas, :creator)
     end
 
     def annotation_search_params
