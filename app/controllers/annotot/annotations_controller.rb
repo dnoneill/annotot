@@ -1,4 +1,5 @@
 require_dependency "annotot/application_controller"
+require 'json'
 
 module Annotot
   class AnnotationsController < ApplicationController
@@ -13,7 +14,19 @@ module Annotot
     def lists
       @annotations = Annotation.where(canvas: annotation_search_params)
     end
-
+    
+    def show
+      @annotation = Annotation.find_by(uuid: params[:id])
+      render json: @annotation.data
+    end
+    
+    # Get /annotations/search
+    def search
+        @results = Annotation.all.map{|elem|JSON.parse(elem.data)}
+        if params[:q]
+            @results = @results.select {|item| item['resource'].map{|elem|elem['chars']}.join(" ").include?(params[:q])}
+        end
+    end
     # POST /annotations
     def create
       @annotation = Annotation.new(annotation_params)

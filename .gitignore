@@ -7,4 +7,5 @@ test/dummy/log/*.log
 test/dummy/tmp/
 Gemfile.lock
 
+.DS_Store
 .internal_test_app
